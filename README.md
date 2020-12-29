@@ -1,3 +1,19 @@
+# Project Name: Work Day Scheduler
+
+
+# Images
+
+# Start. Given Html base shows like this:
+![GivenHtmlDisplayed] (./Assets/GivenHtmlDisplayed.JPG)
+
+# First functional Push. image tag FFP.JPG
+
+
+
+
+
+
+
 # 05 Third-Party APIs: Work Day Scheduler
 
 ## Your Task
