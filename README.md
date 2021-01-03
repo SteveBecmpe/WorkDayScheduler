@@ -12,17 +12,24 @@
 
 # Check list of things to complete.
 -[] page loaded and ready. 1 hour increments load
--[] current date is presented at the top of the page, above the line. HTML line 30 P section ID currentDay
+-[X] current date is presented at the top of the page, above the line. HTML line 30 P section ID currentDay
 -[] maybe current time could be presented somewhere, Optional.. will need current time at some point.
 -[] 1 hour increments are divided in normal work hours of the day per given gif
 -[] hourly increments are color coded base on past, present, and future
 -[] clicking into an hourly increment allows you to enter text and save using save button
 -[] clicking save saves the data in local storage
 -[] refreshing page does NOT lose the data. IE it reloads what is saved in local storage.
+-[] need function that checks for past, present, future states and reassigns the css class every second or checks for when an hour has been broken. the runs update.
 
 
 # Functional coding progression:
 - page load, ready then loads
+- define variables.
+- autoload function is called at bottom of js file
+- autoload calls:
+  + render fram work, list?
+  + check for saved data and render
+  + Check past, present, future and update class for divs or list
 - load/refresh checks to see if anything is saved locally? check variables
 - the
 
