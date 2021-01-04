@@ -7,19 +7,24 @@
 ![GivenHtmlDisplayed] (./Assets/GivenHtmlDisplayed.JPG)
 
 # First functional Push. image tag FFP.JPG
+![text] image link
 
+
+
+# CSS file changes
+- there where several things in the given css file that didn't make sense. Color in the past present and future class's, board radius's that seem to be on the wrong edges etc. Adjustments where made to match the general theme and build symetry. It Does NOT match the given gif exactly but seems to blend the given gif and the intent based on what was provided in the CSS file.
 
 
 # Check list of things to complete.
--[] page loaded and ready. 1 hour increments load
+-[/] page loaded and ready. 1 hour increments load. load ready syntax present. Need to finish render code.
 -[X] current date is presented at the top of the page, above the line. HTML line 30 P section ID currentDay
--[] maybe current time could be presented somewhere, Optional.. will need current time at some point.
--[] 1 hour increments are divided in normal work hours of the day per given gif
--[] hourly increments are color coded base on past, present, and future
+-[X] maybe current time could be presented somewhere, Optional.. will need current time at some point. This looping at the top. updating every second(500ms)
+-[X] 1 hour increments are divided in normal work hours of the day per given gif. The title for each is preloaded into the object array. the actual size in time is controlled by a variable.
+-[/] hourly increments are color coded base on past, present, and future. This test was completed 1-3-20 using console.log on the workday array objects. updating based off current time.
 -[] clicking into an hourly increment allows you to enter text and save using save button
 -[] clicking save saves the data in local storage
 -[] refreshing page does NOT lose the data. IE it reloads what is saved in local storage.
--[] need function that checks for past, present, future states and reassigns the css class every second or checks for when an hour has been broken. the runs update.
+-[/] need function that checks for past, present, future states and reassigns the css class every second or checks for when an hour has been broken. the runs update.
 
 
 # Functional coding progression:

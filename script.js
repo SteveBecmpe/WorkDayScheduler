@@ -1,14 +1,15 @@
 $(document).ready(function () {//START JS Script after document load and ready----START 
     // let CurTimeOfDay = moment().format('hh:mm:ss a');
-    let CurMSTimeOfDay = moment().millisecond();
-    let CurSecTimeOfDay = moment().seconds();
-    let CurMinTimeOfDay = moment().minutes();
-    let CurHrTimeofDay = moment().hours();
-    let CurHMSmSTimeofDay = 0;
+    // let CurMSTimeOfDay = moment().millisecond();
+    // let CurSecTimeOfDay = moment().seconds();
+    // let CurMinTimeOfDay = moment().minutes();
+    // let CurHrTimeofDay = moment().hours();
+    // let CurHMSmSTimeofDay = 0;
+
     // let CurDate = moment().format('dddd, MMMM, Do, hh:mm:ss a');
     // let CurDate = moment().startOf('day').fromNow();
     // let CurDate = moment().endOf('hour').fromNow();
-    let CurDate = moment().format('dddd, MMMM Do');
+    // let CurDate = moment().format('dddd, MMMM Do');
     //86400 seconds in 24 hours
     // Test target time in ms, will become next top of hour after current time is determined.
     //let TargetTime10pm = (11.5 + 12) * 3600000;
@@ -18,17 +19,28 @@ $(document).ready(function () {//START JS Script after document load and ready--
     //     $("#currentDay").text(CurDate);
     //     console.log(CurDate);
     // },500);
-    //
+    
+    function BCTIM(){// Build Current Time In MilliSeconds, returns milliseconds
+        let CurHMSmSTimeofDay = 0;
+        let CurHrTimeofDay = moment().hours();
+        CurHMSmSTimeofDay = CurHMSmSTimeofDay + (CurHrTimeofDay * 3600000);
+        let CurMinTimeOfDay = moment().minutes();
+        CurHMSmSTimeofDay = CurHMSmSTimeofDay + (CurMinTimeOfDay * 60000);
+        let CurSecTimeOfDay = moment().seconds();
+        CurHMSmSTimeofDay = CurHMSmSTimeofDay + (CurSecTimeOfDay * 1000);
+        let CurMSTimeOfDay = moment().millisecond();
+        CurHMSmSTimeofDay = CurHMSmSTimeofDay + CurMSTimeOfDay;
+        return CurHMSmSTimeofDay;
+
+    }
+
 
     //test loop setinterval, updates the title 
     setInterval(function () {
         // CurDate = moment().format('dddd, MMMM Do');
-        CurDate = moment().format('dddd, MMMM, Do, hh:mm:ss a');
+        let CurDate = moment().format('dddd, MMMM, Do, hh:mm:ss a');
         $("#currentDay").text(CurDate);
     }, 500);
-
-
-
 
     //test loop setinterval, updates the title 
     // setInterval(function () {
@@ -108,7 +120,7 @@ $(document).ready(function () {//START JS Script after document load and ready--
             SaveDate: ""
         },
         {
-            Label: "12am",
+            Label: "12pm",
             EventText: "",
             TimeClass: "",
             StartTimeThresh: "",
@@ -151,22 +163,17 @@ $(document).ready(function () {//START JS Script after document load and ready--
         }
     ];
 
-
     //TimeStartInterval - the starting time of the Scheduled List
     // variable defined in Milliseconds from 0;
     // 8 am = 8 hrs x 3600 seconds x 1000 milliseconds = 28800000
     // 1 hr = 3600000 ms
     //9am = 32400000
     //Start time of the first time slot in the planner. Defined as Milliseconds
-    let StartTimeSlot = ((11 + 12) * 3600000 + (54*60000)   );//.0165 hrs = 1 min
+    let StartTimeSlot = ((4+12) * 3600000 + (46*60000)   );//.0165 hrs = 1 min
     //TimeSlotQty - the number of allowed time slots in the day planner
     let TimeSlotQty = WorkHours.length;
     //Time Slot Interval - variable is used to adjust the size the time slot, can be a small as 1 second, defined in milliseconds
     let TimeSlotInterval = 1000 * 3;//1000 = 1 second, 3600 seconds = 1 hour, this affects the rate at which the background css class changes
-
-
-
-    // console.log( WorkHours);
 
     //START LIST OF FUNCTIONS--------------------------------------FUNCTIONS START
 
@@ -175,81 +182,74 @@ $(document).ready(function () {//START JS Script after document load and ready--
         for (let i = 0; i < WorkHours.length; i++) {
             WorkHours[i].TimeClass = "";
         }
-
-
     };
-RTAC();
+RTAC();//Reset Test Array Classes
 
     //Build Test Array Start Time Thresh Holds
     function BTASTT() {
         let TempStartTimeThresh = StartTimeSlot - TimeSlotInterval;//Sets the temp to 1 interval before start time.
-
         for (let i = 0; i < WorkHours.length; i++) {
             TempStartTimeThresh += TimeSlotInterval;//increments temp to start time on first iteration and next on all others
             WorkHours[i].StartTimeThresh = TempStartTimeThresh;//sets the StartTimeThreshold for each array object
         }
-
-
     };
-    BTASTT();
-    // console.log(WorkHours);
-    // console.log(CurHMSmSTimeofDay);
+    BTASTT();//Build Test Array Start Time Thresh Holds
 
     //Update Time Class Past Present Future
     function UTCPPF() {
         for (i = 0; i < WorkHours.length; i++) {
-            CurHMSmSTimeofDay = 0;
-            CurHrTimeofDay = moment().hours();
-            CurHMSmSTimeofDay = CurHMSmSTimeofDay + (CurHrTimeofDay * 3600000);
-            CurMinTimeOfDay = moment().minutes();
-            CurHMSmSTimeofDay = CurHMSmSTimeofDay + (CurMinTimeOfDay * 60000);
-            CurSecTimeOfDay = moment().seconds();
-            CurHMSmSTimeofDay = CurHMSmSTimeofDay + (CurSecTimeOfDay * 1000);
-            CurMSTimeOfDay = moment().millisecond();
-            CurHMSmSTimeofDay = CurHMSmSTimeofDay + CurMSTimeOfDay;
+            let TempMsTime = BCTIM();// Build Current Time In MilliSeconds, returns milliseconds
 
+            // CurHMSmSTimeofDay = 0;
+            // CurHrTimeofDay = moment().hours();
+            // CurHMSmSTimeofDay = CurHMSmSTimeofDay + (CurHrTimeofDay * 3600000);
+            // CurMinTimeOfDay = moment().minutes();
+            // CurHMSmSTimeofDay = CurHMSmSTimeofDay + (CurMinTimeOfDay * 60000);
+            // CurSecTimeOfDay = moment().seconds();
+            // CurHMSmSTimeofDay = CurHMSmSTimeofDay + (CurSecTimeOfDay * 1000);
+            // CurMSTimeOfDay = moment().millisecond();
+            // CurHMSmSTimeofDay = CurHMSmSTimeofDay + CurMSTimeOfDay;
 
-            // CurHMSmSTimeofDay = CurMSTimeOfDay + (CurSecTimeOfDay * 1000) + (CurMinTimeOfDay * 60000) + (CurHrTimeofDay * 3600000);
-
-            if (CurHMSmSTimeofDay <= (WorkHours[i].StartTimeThresh - 100)) {//past condition
+            if (TempMsTime <= (WorkHours[i].StartTimeThresh - 100)) {//past condition
                 WorkHours[i].TimeClass = "future";
-                WorkHours[i].EventText = CurHMSmSTimeofDay;
-            } else if ((CurHMSmSTimeofDay >= (WorkHours[i].StartTimeThresh - 100)) && (CurHMSmSTimeofDay < (WorkHours[i].StartTimeThresh + TimeSlotInterval - 100))) {//Present
+                WorkHours[i].EventText = TempMsTime;
+            } else if ((TempMsTime >= (WorkHours[i].StartTimeThresh - 100)) && (TempMsTime < (WorkHours[i].StartTimeThresh + TimeSlotInterval - 100))) {//Present
                 WorkHours[i].TimeClass = "present";
-                WorkHours[i].EventText = CurHMSmSTimeofDay;
-            } else if (CurHMSmSTimeofDay > (WorkHours[i].StartTimeThresh - 100)) {
+                WorkHours[i].EventText = TempMsTime;
+            } else if (TempMsTime > (WorkHours[i].StartTimeThresh - 100)) {
                 WorkHours[i].TimeClass = "past";
-                WorkHours[i].EventText = CurHMSmSTimeofDay;
+                WorkHours[i].EventText = TempMsTime;
             } else {
                 WorkHours[i].TimeClass = "error";
-                WorkHours[i].EventText = CurHMSmSTimeofDay;
+                WorkHours[i].EventText = TempMsTime;
             }
+
+            // if (CurHMSmSTimeofDay <= (WorkHours[i].StartTimeThresh - 100)) {//past condition
+            //     WorkHours[i].TimeClass = "future";
+            //     WorkHours[i].EventText = CurHMSmSTimeofDay;
+            // } else if ((CurHMSmSTimeofDay >= (WorkHours[i].StartTimeThresh - 100)) && (CurHMSmSTimeofDay < (WorkHours[i].StartTimeThresh + TimeSlotInterval - 100))) {//Present
+            //     WorkHours[i].TimeClass = "present";
+            //     WorkHours[i].EventText = CurHMSmSTimeofDay;
+            // } else if (CurHMSmSTimeofDay > (WorkHours[i].StartTimeThresh - 100)) {
+            //     WorkHours[i].TimeClass = "past";
+            //     WorkHours[i].EventText = CurHMSmSTimeofDay;
+            // } else {
+            //     WorkHours[i].TimeClass = "error";
+            //     WorkHours[i].EventText = CurHMSmSTimeofDay;
+            // }
         }
 
     }
-    UTCPPF();
+    UTCPPF();//Update Time Class Past Present Future
     // console.log(WorkHours);
     // console.log(CurHMSmSTimeofDay);
     setInterval(function () {//-------------------------------Consol log test loop that shows past present future logic works.
-        UTCPPF();
+        UTCPPF();//Update Time Class Past Present Future
         for (let i = 0; i < WorkHours.length; i++) {
             console.log(WorkHours[i]);
-            
         }
-        console.log(CurHMSmSTimeofDay);
+        console.log(BCTIM());// Build Current Time In MilliSeconds, returns milliseconds
     }, 500);
-
-
-
-
-
-
-    // not needed //Find current time - finds the current point in time on spectrum. on transistions or in between
-    // 
-    //
-
-
-
 
     //Start or initialize function
     //create temp array variable.
@@ -267,21 +267,10 @@ RTAC();
     //Array text data update. - cycles through the array data and updates the text data.
     //Array Data Save local - saves the array data in local storage
     //Array Data Local Retrieve - retreives data from local storage
-    //
-
-
-
-
-
-
 
     //END LIST OF FUNCTIONS----------------------------------------FUNCTIONS END
 
     //functional order of calls
     //Call Init
-
-
-
-
 
 });//END JS Script after document load and ready----------------------------------END 
