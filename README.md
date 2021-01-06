@@ -26,6 +26,13 @@
 -[] refreshing page does NOT lose the data. IE it reloads what is saved in local storage.
 -[/] need function that checks for past, present, future states and reassigns the css class every second or checks for when an hour has been broken. the runs update.
 
+# Current Status------------------------------------------------------------------------
+- auto load works. 
+- Clear content doesn't seem to work consistently still have 2 renders
+- need set interval function
+- need logic loop trigger for set interval 
+
+
 
 # Functional coding progression:
 - page load, ready then loads
