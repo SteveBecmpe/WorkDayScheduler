@@ -1,14 +1,14 @@
 $(document).ready(function () {//START JS Script after document load and ready----START 
 
-    let NewOld = "new";
+   
     setInterval(function () {//test loop setinterval, updates the title 
         // CurDate = moment().format('dddd, MMMM Do');
         let CurDate = moment().format('dddd, MMMM, Do, hh:mm:ss a');
         $("#currentDay").text(CurDate);
     }, 500);
 
-    let StartTimeSlot =(((11 + 12) * 3600000) + (25 * 60000));// (9 * 3600000); // Start time of the first time slot in the planner. Defined as Milliseconds .0165 hrs = 1 min, 1 hr = 3600000 ms, 9am = 32400000, 8 am = 8 hrs x 3600 seconds x 1000 milliseconds = 28800000
-    let TimeSlotInterval = (0 * 60000) + (1000 * 3);//Time Slot Interval - variable is used to adjust the size the time slot, can be a small as 1 second, defined in milliseconds 1000 = 1 second, 3600 seconds = 1 hour, this affects the rate at which the background css class changes
+    let StartTimeSlot = (9 * 3600000); // (((11 + 12) * 3600000) + (25 * 60000));//  Start time of the first time slot in the planner. Defined as Milliseconds .0165 hrs = 1 min, 1 hr = 3600000 ms, 9am = 32400000, 8 am = 8 hrs x 3600 seconds x 1000 milliseconds = 28800000
+    let TimeSlotInterval = (60 * 60000) + (1000 * 0);//Time Slot Interval - variable is used to adjust the size the time slot, can be a small as 1 second, defined in milliseconds 1000 = 1 second, 3600 seconds = 1 hour, this affects the rate at which the background css class changes
     let NextInterval = (0 * 60000) + (1000 * 3);// next time out interval in ms
     let ThresholdSwag = 500;//ms window for slop at threshold
     let CurThreshold = StartTimeSlot;
