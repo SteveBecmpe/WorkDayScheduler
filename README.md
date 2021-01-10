@@ -1,6 +1,6 @@
 # Project Name: Work Day Scheduler
 -this project allows the user to enter events in specific times slots during the day. The information is saved when the save button is pressed. the saved information is local to the machine and reloads when the page is refreshed.
-- the background color of each time slot is supposed to change color as time progresses.. this is a difficult bit for me and isn't working at the moment.
+- the background color of each time slot is supposed to change color as time progresses.. this is a difficult to see unless you have a ton of time or want to change the variables as I have described below.
 
 # Web Link
 https://stevebecmpe.github.io/WorkDayScheduler/
@@ -49,11 +49,11 @@ https://github.com/SteveBecmpe/WorkDayScheduler.git
 -[X] current date is presented at the top of the page, above the line. HTML line 30 P section ID currentDay
 -[X] maybe current time could be presented somewhere, Optional.. will need current time at some point. This looping at the top. updating every second(500ms)
 -[X] 1 hour increments are divided in normal work hours of the day per given gif. The title for each is preloaded into the object array. the actual size in time is controlled by a variable.
--[/] hourly increments are color coded base on past, present, and future. This test was completed 1-3-20 using console.log on the workday array objects. updating based off current time.
+-[X] hourly increments are color coded base on past, present, and future. This test was completed 1-3-20 using console.log on the workday array objects. updating based off current time.
 -[X] clicking into an hourly increment allows you to enter text and save using save button
 -[X] clicking save saves the data in local storage
 -[X] refreshing page does NOT lose the data. IE it reloads what is saved in local storage.
--[/] need function that checks for past, present, future states and reassigns the css class every second or checks for when an hour has been broken. the runs update.
+-[X] need function that checks for past, present, future states and reassigns the css class every second or checks for when an hour has been broken. the runs update.
 
 # Current Status
 - auto load works. 
