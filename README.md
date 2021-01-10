@@ -5,10 +5,13 @@
 # Images
 
 # Start. Given Html base shows like this:
-![GivenHtmlDisplayed] (./Assets/GivenHtmlDisplayed.JPG)
+![GivenHtmlDisplayed](./Assets/GivenHtmlDisplayed.JPG)
 
-# First functional Push. image tag FFP.JPG
-![hardcodehtmlforcsscheck] (./Assets/HardCoded9amTimeSlot.JPG)
+# First semi-functional Push:
+![hardcodehtmlforcsscheck](./Assets/HardCoded9amTimeSlot.JPG)
+
+# Data save and render functional Push:
+![Save data render saved data](./Assets/DataSaveLoad.JPG)
 
 
 
