@@ -7,8 +7,8 @@ $(document).ready(function () {//START JS Script after document load and ready--
         $("#currentDay").text(CurDate);
     }, 500);
 
-    let StartTimeSlot =(9 * 3600000); //(((11 + 12) * 3600000) + (9 * 60000));//Start time of the first time slot in the planner. Defined as Milliseconds .0165 hrs = 1 min, 1 hr = 3600000 ms, 9am = 32400000, 8 am = 8 hrs x 3600 seconds x 1000 milliseconds = 28800000
-    let TimeSlotInterval = (60 * 60000) + (1000 * 0);//Time Slot Interval - variable is used to adjust the size the time slot, can be a small as 1 second, defined in milliseconds 1000 = 1 second, 3600 seconds = 1 hour, this affects the rate at which the background css class changes
+    let StartTimeSlot =(((11 + 12) * 3600000) + (25 * 60000));// (9 * 3600000); // Start time of the first time slot in the planner. Defined as Milliseconds .0165 hrs = 1 min, 1 hr = 3600000 ms, 9am = 32400000, 8 am = 8 hrs x 3600 seconds x 1000 milliseconds = 28800000
+    let TimeSlotInterval = (0 * 60000) + (1000 * 3);//Time Slot Interval - variable is used to adjust the size the time slot, can be a small as 1 second, defined in milliseconds 1000 = 1 second, 3600 seconds = 1 hour, this affects the rate at which the background css class changes
     let NextInterval = (0 * 60000) + (1000 * 3);// next time out interval in ms
     let ThresholdSwag = 500;//ms window for slop at threshold
     let CurThreshold = StartTimeSlot;
@@ -149,10 +149,6 @@ $(document).ready(function () {//START JS Script after document load and ready--
         SADL();//Save Array Data Local
     });
 
-    // if the current time is smaller than start time slot set clas to future
-    // if the current time is bigger than start time slot but smaller than next time slot set to Present
-    // if the current time is bigger than the start time and bigger than the next time slot set to parseInt
-
     setInterval(function () {//test loop setinterval, updates the title 
         for (let i = 0; i < WorkHours.length; i++) {// log of array data
             let temp = '#'
@@ -187,165 +183,5 @@ $(document).ready(function () {//START JS Script after document load and ready--
 
     }, 1000);
 
-
-    if (NewOld === "new") {//-----------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    } else if (NewOld === "old") {//-----------------------------------------------------------------------------------------------------------------------------------------------------
-
-        // Function with setTimeout inside.. call this every time an interval is calculated. for delay for loop. inside loop do a setinterval for checking for threshold. 
-
-
-        //build next interval or start interval
-        if (BCTIM() < StartTimeSlot) {//before the WorkHours Start array
-            NextInterval = StartTimeSlot - BCTIM;
-        } else if (BCTIM() < (StartTimeSlot + (WorkHours.length * TimeSlotInterval))) {// in the array
-            for (i = 0; i < WorkHours.length; i++) {
-                if (BCTIM() < (WorkHours[i].StartTimeThresh)) {
-                    NextInterval = WorkHours[i];
-                    break;
-                }
-            }
-            //need function or code to find position in of next top of the hour
-        } else { // after array
-            NextInterval = 0;
-        };
-
-        setTimeout(function () {//Consol log test loop that shows past present future logic works.
-
-            while ((BCTIM() <= (CurThreshold - ThresholdSwag)) && (BCTIM() >= (CurThreshold + ThresholdSwag))) {//Consol log test loop that shows past present future logic works.
-                UTCPPF();//Update Time Class Past Present Future
-                for (let i = 0; i < WorkHours.length; i++) {
-                    console.log(WorkHours[i]);
-                }
-                console.log(BCTIM());// Build Current Time In MilliSeconds, returns milliseconds
-            }//Shou
-
-            // UTCPPF();//Update Time Class Past Present Future
-            // for (let i = 0; i < WorkHours.length; i++) {
-            //     console.log(WorkHours[i]);
-            // }
-            // console.log(BCTIM());// Build Current Time In MilliSeconds, returns milliseconds
-        }, NextInterval - ThresholdSwag);//this variable is the time index later.
-
-
-        while ((BCTIM() <= (CurThreshold - ThresholdSwag)) && (BCTIM() >= (CurThreshold + ThresholdSwag))) {//Consol log test loop that shows past present future logic works.
-            UTCPPF();//Update Time Class Past Present Future
-            for (let i = 0; i < WorkHours.length; i++) {
-                console.log(WorkHours[i]);
-            }
-            console.log(BCTIM());// Build Current Time In MilliSeconds, returns milliseconds
-        }//Should run during a small window of time.
-
-
-        // function CCC() {//Clear Container Content
-        //     $("").html(".container")
-        // };
-
-
-        function RAC() { //RenderArrayContent
-            $(".container").html("")//.empty
-            for (let i = 0; i < WorkHours.length; i++) {
-                $(".container").append(
-                    "<div class='row'><div class='col-1 hour time-block' id='" +
-                    WorkHours[i].Label + "'>" + WorkHours[i].Label + "</div><textarea class='col-10 " +
-                    WorkHours[i].TimeClass + "' placeholder= 'test text'> html text area " + WorkHours[i].TimeClass + " </textarea><div class = 'col-1 saveBtn'><i class='fas fa-save'></i>"
-                )//.appendTo(".container");
-
-                // $("<div class='row'><div class='col-1 hour time-block' id='" +
-                //     WorkHours[i].Label + "'>" + WorkHours[i].Label + "</div><textarea class='col-10 " +
-                //     WorkHours[i].TimeClass + "' placeholder= 'test text'> html text area " + WorkHours[i].TimeClass + " </textarea><div class = 'col-1 saveBtn'><i class='fas fa-save'></i>"
-                // ).appendTo(".container");//.appendTo(".container");
-            }
-        }
-        RAC(); //RenderArrayContent
-
-        // function CNI(MsCurTime) {//Calculate Next Interval
-        // }
-
-        //START LIST OF FUNCTIONS--------------------------------------FUNCTIONS START
-
-        // function RTAC() {//Reset Test Arrayy Classes
-        //     for (let i = 0; i < WorkHours.length; i++) {
-        //         WorkHours[i].TimeClass = "";
-        //     }
-        // };
-        //RTAC();//Reset Test Array Classes
-
-
-        function UTCPPF() { //Update Time Class Past Present Future
-            for (i = 0; i < WorkHours.length; i++) {
-                let TempMsTime = BCTIM();// Build Current Time In MilliSeconds, returns milliseconds
-                if (TempMsTime <= (WorkHours[i].StartTimeThresh - 100)) {//past condition
-                    $("#" + WorkHours[i].Label.TimeClass).addClass("future");
-
-                    WorkHours[i].TimeClass = "future";
-                    WorkHours[i].EventText = TempMsTime;
-                    // RAC(); //RenderArrayContent
-                    // CCC();
-                    break;
-                } else if ((TempMsTime >= (WorkHours[i].StartTimeThresh - 100)) && (TempMsTime < (WorkHours[i].StartTimeThresh + TimeSlotInterval - 100))) {//Present
-
-                    $("#" + WorkHours[i].Label.TimeClass).text("present");
-
-                    WorkHours[i].TimeClass = "present";
-                    WorkHours[i].EventText = TempMsTime;
-                    // RAC(); //RenderArrayContent
-                    // CCC();
-                    break;
-                } else if (TempMsTime > (WorkHours[i].StartTimeThresh - 100)) {
-                    $("#" + WorkHours[i].Label.TimeClass).text("past");
-
-
-                    WorkHours[i].TimeClass = "past";
-                    WorkHours[i].EventText = TempMsTime;
-                    // RAC(); //RenderArrayContent
-                    // CCC();
-                    break;
-                } else {
-
-                    $("#" + WorkHours[i].Label.TimeClass).text("error");
-
-                    WorkHours[i].TimeClass = "error";
-                    WorkHours[i].EventText = TempMsTime;
-                    // RAC(); //RenderArrayContent
-                    // CCC();
-                    break;
-                }
-            }
-            // RAC(); //RenderArrayContent
-
-        }
-        // UTCPPF();//Update Time Class Past Present Future
-
-        // while ( (BCTIM() <= (CurThreshold - ThresholdSwag)) && (BCTIM() >= (CurThreshold + ThresholdSwag)) ){//Consol log test loop that shows past present future logic works.
-        //     UTCPPF();//Update Time Class Past Present Future
-        //     for (let i = 0; i < WorkHours.length; i++) {
-        //         console.log(WorkHours[i]);
-        //     }
-        //     console.log(BCTIM());// Build Current Time In MilliSeconds, returns milliseconds
-        // }//Should run during a small window of time.
-
-
-
-        // setTimeout(function () {//Consol log test loop that shows past present future logic works.
-        //     UTCPPF();//Update Time Class Past Present Future
-        //     for (let i = 0; i < WorkHours.length; i++) {
-        //         console.log(WorkHours[i]);
-        //     }
-        //     console.log(BCTIM());// Build Current Time In MilliSeconds, returns milliseconds
-        // }, NextInterval);//this variable is the time index later.
-
-
-        // if (NextInterval > 0) {
-        //     setInterval(function () {//Consol log test loop that shows past present future logic works.
-        //         UTCPPF();//Update Time Class Past Present Future
-        //         for (let i = 0; i < WorkHours.length; i++) {
-        //             console.log(WorkHours[i]);
-        //         }
-        //         console.log(BCTIM());// Build Current Time In MilliSeconds, returns milliseconds
-        //     }, NextInterval);
-        // }
-        // //END LIST OF FUNCTIONS----------------------------------------FUNCTIONS END
-    };
 
 });//END JS Script after document load and ready----------------------------------END 
