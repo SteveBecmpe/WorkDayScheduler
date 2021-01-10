@@ -1,12 +1,5 @@
 $(document).ready(function () {//START JS Script after document load and ready----START 
 
-    //[X] Start time clock setinterval
-    //[X] Declare variable and functions.
-    //[ ] find stored data. set equal to array
-    //[ ] render array
-    //[ ] set start times and intervals based off variables
-    // Check current moment in time, compare to array time parameters, and update classs accordingly
-
     let NewOld = "new";
     setInterval(function () {//test loop setinterval, updates the title 
         // CurDate = moment().format('dddd, MMMM Do');
@@ -14,8 +7,8 @@ $(document).ready(function () {//START JS Script after document load and ready--
         $("#currentDay").text(CurDate);
     }, 500);
 
-    let StartTimeSlot = (((10 + 12) * 3600000) + (23 * 60000));//Start time of the first time slot in the planner. Defined as Milliseconds .0165 hrs = 1 min, 1 hr = 3600000 ms, 9am = 32400000, 8 am = 8 hrs x 3600 seconds x 1000 milliseconds = 28800000
-    let TimeSlotInterval = (0 * 60000) + (1000 * 20);//Time Slot Interval - variable is used to adjust the size the time slot, can be a small as 1 second, defined in milliseconds 1000 = 1 second, 3600 seconds = 1 hour, this affects the rate at which the background css class changes
+    let StartTimeSlot =(9 * 3600000); //(((11 + 12) * 3600000) + (9 * 60000));//Start time of the first time slot in the planner. Defined as Milliseconds .0165 hrs = 1 min, 1 hr = 3600000 ms, 9am = 32400000, 8 am = 8 hrs x 3600 seconds x 1000 milliseconds = 28800000
+    let TimeSlotInterval = (60 * 60000) + (1000 * 0);//Time Slot Interval - variable is used to adjust the size the time slot, can be a small as 1 second, defined in milliseconds 1000 = 1 second, 3600 seconds = 1 hour, this affects the rate at which the background css class changes
     let NextInterval = (0 * 60000) + (1000 * 3);// next time out interval in ms
     let ThresholdSwag = 500;//ms window for slop at threshold
     let CurThreshold = StartTimeSlot;
@@ -108,27 +101,18 @@ $(document).ready(function () {//START JS Script after document load and ready--
         localStorage.setItem("SavedWorkArray", JSON.stringify(WorkHours));
     }
 
-    // let testSave = confirm("Save to local?");
-    // if (testSave) {
-    //     SADL();
-    // }
-
     function LSAD() {//Load Saved Array Data
         let SavedArrayData = JSON.parse(localStorage.getItem("SavedWorkArray"));
-        if ((SavedArrayData !== null)) {//&& (SavedArrayData[0].SaveDate === moment().format('dddd, MMMM, Do'))
+        if ((SavedArrayData !== null) && (SavedArrayData[0].SaveDate === moment().format('dddd, MMMM, Do'))) {//&& (SavedArrayData[0].SaveDate === moment().format('dddd, MMMM, Do'))
             //only loads saved data if it was saved on the same day... will NOT load old data.
             WorkHours = SavedArrayData;
-            console.log("JSON Saved data LOADED");
+            // console.log("JSON Saved data LOADED");
         } else {
-            console.log("JSON Saved data set empty");
+            // console.log("JSON Saved data set empty");
         }
 
     };
     LSAD();//Load Saved Array Data
-
-    for (let i = 0; i < WorkHours.length; i++) {// log of array data
-        console.log(WorkHours[i]);
-    }
 
     function BASTT() {//Build Array Start Time Thresh Holds
         let TempStartTimeThresh = StartTimeSlot - TimeSlotInterval;//Sets the temp to 1 interval before start time.
@@ -137,190 +121,76 @@ $(document).ready(function () {//START JS Script after document load and ready--
             WorkHours[i].StartTimeThresh = TempStartTimeThresh;//sets the StartTimeThreshold for each array object
         }
     };
-
-    // setTimeout(function () {
-    //     BASTT();//Build Array Start Time Thresh Holds
-    //     for (let i = 0; i < WorkHours.length; i++) {// log of array data
-    //         console.log(WorkHours[i]);
-    //     }
-    // }, 500)
-    BASTT();//Build Test Array Start Time Thresh Holds,, old auto call... current call has 500ms delay
+    BASTT();////Build Array Start Time Thresh Holds
 
     function RAC() { //RenderArrayContent
         $(".container").html("")//.empty, should not need this because render will only be called once.
         for (let i = 0; i < WorkHours.length; i++) {
             $(".container").append(
                 "<div class='row'><div class='col-1 hour time-block'>" + WorkHours[i].Label + "</div><textarea class='col-10 " +
-                WorkHours[i].TimeClass + "' id=" + WorkHours[i].Label + ">" + WorkHours[i].EventText +" </textarea><div class = 'col-1 saveBtn'><i class='fas fa-save'></i>"
+                WorkHours[i].TimeClass + "' id=" + WorkHours[i].Label + ">" + WorkHours[i].EventText + " </textarea><div class = 'col-1 saveBtn'><i class='fas fa-save'></i>"
             )
         }
     }
-    // setTimeout(() => {
-    //     RAC(); //RenderArrayContent
-    // }, 1500);
     RAC(); //RenderArrayContent
 
-    // setInterval(() => {
-    //     for (let i = 0; i < WorkHours.length; i++) {// log of array data
-    //         let temp = '#';
-    //         temp = temp + WorkHours[i].Label;
-    //         $(temp).removeClass("DefaultTimeClass").addClass("past");
-    //         temp = '#';
-    //         temp = temp + WorkHours[i+1].Label;
-    //         $(temp).removeClass("DefaultTimeClass").addClass("present");
-    //         temp = '#';
-    //         temp = temp + WorkHours[i=2].Label;
-    //         $(temp).removeClass("DefaultTimeClass").addClass("future");
-    //     }
-    // }, 1000);
-
-
-   
-
-    // for (let i = 0; i < WorkHours.length; i++) {// log of array data
-    //     let temp = '#'
-    //     temp = temp + WorkHours[i].Label;
-    //     console.log(temp);
-
-    //     let temptemp = $(temp).val();
-    //     console.log(temptemp);
-    // }
-
-
-
-    $('.saveBtn').on('click', function(){
+    $('.saveBtn').on('click', function () {
         // console.log(this.getItem());
         // alert(".saveBtn clicked " + this);
         for (let i = 0; i < WorkHours.length; i++) {// log of array data
             let temp = '#'
             temp = temp + WorkHours[i].Label;
             // console.log(temp);
-    
+
             let temptemp = $(temp).val();
             // console.log(temptemp);
             WorkHours[i].EventText = temptemp;
         }
-
-        // for (let i = 0; i < WorkHours.length; i++) {// log of array data
-        //     console.log(WorkHours[i]);
-        // }
-
         SADL();//Save Array Data Local
     });
-  
+
+    // if the current time is smaller than start time slot set clas to future
+    // if the current time is bigger than start time slot but smaller than next time slot set to Present
+    // if the current time is bigger than the start time and bigger than the next time slot set to parseInt
+
+    setInterval(function () {//test loop setinterval, updates the title 
+        for (let i = 0; i < WorkHours.length; i++) {// log of array data
+            let temp = '#'
+            let tempTime = BCTIM();
+            temp = temp + WorkHours[i].Label;
+            console.log(temp);
+            // console.log("BCTIM: "+ BCTIMStart " + WorkHours[i].StartTimeThresh);
+            if (tempTime < WorkHours[i].StartTimeThresh) {
+                console.log("1 if");
+                if ($(temp).hasClass("DefaultTimeClass")) {
+                    $(temp).removeClass("DefaultTimeClass").addClass("future")
+                }//add else if condition if needed
+            } else if ((tempTime > WorkHours[i].StartTimeThresh) && (tempTime < (WorkHours[i].StartTimeThresh + TimeSlotInterval))) {
+                console.log("2 if");
+                if ($(temp).hasClass("DefaultTimeClass")) {
+                    $(temp).removeClass("DefaultTimeClass").addClass("present")
+                } else if ($(temp).hasClass("future")) {
+                    $(temp).removeClass("future").addClass("present")
+                }
+            } else if ((tempTime > WorkHours[i].StartTimeThresh) && (tempTime > (WorkHours[i].StartTimeThresh + TimeSlotInterval))) {
+                console.log("3 if");
+                if ($(temp).hasClass("DefaultTimeClass")) {
+                    $(temp).removeClass("DefaultTimeClass").addClass("past")
+                } else if ($(temp).hasClass("future")) {
+                    $(temp).removeClass("future").addClass("past")
+                }else if ($(temp).hasClass("present")) {
+                    $(temp).removeClass("present").addClass("past")
+                }
+            }
+
+        };
+
+    }, 1000);
+
+
     if (NewOld === "new") {//-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
     } else if (NewOld === "old") {//-----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-        setInterval(function () {//test loop setinterval, updates the title 
-            // CurDate = moment().format('dddd, MMMM Do');
-            let CurDate = moment().format('dddd, MMMM, Do, hh:mm:ss a');
-            $("#currentDay").text(CurDate);
-        }, 500);
-
-        let StartTimeSlot = (((10 + 12) * 3600000) + (23 * 60000));//Start time of the first time slot in the planner. Defined as Milliseconds .0165 hrs = 1 min, 1 hr = 3600000 ms, 9am = 32400000, 8 am = 8 hrs x 3600 seconds x 1000 milliseconds = 28800000
-        let TimeSlotInterval = (0 * 60000) + (1000 * 20);//Time Slot Interval - variable is used to adjust the size the time slot, can be a small as 1 second, defined in milliseconds 1000 = 1 second, 3600 seconds = 1 hour, this affects the rate at which the background css class changes
-        let NextInterval = (0 * 60000) + (1000 * 3);// next time out interval in ms
-        let ThresholdSwag = 500;//ms window for slop at threshold
-        let CurThreshold = StartTimeSlot;
-
-
-
-        let WorkHours = [// Array of objects for basic start up content--------------------------------------------------------------------------------
-            {
-                Label: "9am",
-                EventText: "",
-                TimeClass: "Default Time Class",
-                StartTimeThresh: "",
-                SaveDate: ""
-            },
-            {
-                Label: "10am",
-                EventText: "",
-                TimeClass: "Default Time Class",
-                StartTimeThresh: "",
-                SaveDate: ""
-
-            },
-            {
-                Label: "11am",
-                EventText: "",
-                TimeClass: "Default Time Class",
-                StartTimeThresh: "",
-                SaveDate: ""
-            },
-            {
-                Label: "12pm",
-                EventText: "",
-                TimeClass: "Default Time Class",
-                StartTimeThresh: "",
-                SaveDate: ""
-            },
-            {
-                Label: "1pm",
-                EventText: "",
-                TimeClass: "Default Time Class",
-                StartTimeThresh: "",
-                SaveDate: ""
-            },
-            {
-                Label: "2pm",
-                EventText: "",
-                TimeClass: "Default Time Class",
-                StartTimeThresh: "",
-                SaveDate: ""
-            }
-            , {
-                Label: "3pm",
-                EventText: "",
-                TimeClass: "Default Time Class",
-                StartTimeThresh: "",
-                SaveDate: ""
-            }
-            , {
-                Label: "4pm",
-                EventText: "",
-                TimeClass: "Default Time Class",
-                StartTimeThresh: "",
-                SaveDate: ""
-            }
-            , {
-                Label: "5pm",
-                EventText: "",
-                TimeClass: "Default Time Class",
-                StartTimeThresh: "",
-                SaveDate: ""
-            }
-        ];
-
-        function BTASTT() {//Build Test Array Start Time Thresh Holds
-            let TempStartTimeThresh = StartTimeSlot - TimeSlotInterval;//Sets the temp to 1 interval before start time.
-            for (let i = 0; i < WorkHours.length; i++) {
-                TempStartTimeThresh += TimeSlotInterval;//increments temp to start time on first iteration and next on all others
-                WorkHours[i].StartTimeThresh = TempStartTimeThresh;//sets the StartTimeThreshold for each array object
-            }
-        };
-        BTASTT();//Build Test Array Start Time Thresh Holds
-
-
-
-
-        function BCTIM() {// Build Current Time In MilliSeconds, returns milliseconds
-            // there is another way to do this.
-            let CurHMSmSTimeofDay = 0;
-            let CurHrTimeofDay = moment().hours();
-            CurHMSmSTimeofDay = CurHMSmSTimeofDay + (CurHrTimeofDay * 3600000);
-            let CurMinTimeOfDay = moment().minutes();
-            CurHMSmSTimeofDay = CurHMSmSTimeofDay + (CurMinTimeOfDay * 60000);
-            let CurSecTimeOfDay = moment().seconds();
-            CurHMSmSTimeofDay = CurHMSmSTimeofDay + (CurSecTimeOfDay * 1000);
-            let CurMSTimeOfDay = moment().millisecond();
-            CurHMSmSTimeofDay = CurHMSmSTimeofDay + CurMSTimeOfDay;
-            return CurHMSmSTimeofDay;
-        };
 
         // Function with setTimeout inside.. call this every time an interval is calculated. for delay for loop. inside loop do a setinterval for checking for threshold. 
 

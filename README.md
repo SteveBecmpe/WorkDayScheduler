@@ -2,6 +2,31 @@
 -this project allows the user to enter events in specific times slots during the day. The information is saved when the save button is pressed. the saved information is local to the machine and reloads when the page is refreshed.
 - the background color of each time slot is supposed to change color as time progresses.. this is a difficult bit for me and isn't working at the moment.
 
+# Web Link
+https://stevebecmpe.github.io/WorkDayScheduler/
+
+# GitHub Link
+https://github.com/SteveBecmpe/WorkDayScheduler.git
+
+# NOTE to EVERYONE.. If you want to see the time slot colors change you need to change these variables for your current time
+- StartTimeSlot variable sets the starting time slot of the first time slot, defined in milliseconds from midnight 
+     + formula in declaration is setup for easy hours and mins. ..(((Hours + 12) * 3600000) + (mins * 60000))
+    + if you happen to be testing before noon you will need to drop the "+ 12" from above. 
+    + default at time of final commit is (9 * 3600000) for 9 am 
+    + this is handy for testing the css color function for past present and future. you can move the start time independant of what the time header says
+- TimeSlotInterval variable is the length of each time slot on the calendar, defined in milliseconds.
+    + formula in declaration is setup for easy mins and seconds. ..(mins * 60000) + (1000 * seconds)
+    + this is handy for testing the css color function for past present and future.  you can change the length of each time slot for testing independant of what the time header says.
+    + default at time of final commit is (60 * 60000) + (1000 * 0) for 60 min intervals.
+
+# Sorry these don't work, had high hopes but ran out of time.
+
+- NextInterval is a variable i planned to use so that the checking css function didn't have to run every second or so.. ran out of time to implement will leave in so that it can be used in the future. 
+  + purpose was to save the amount 
+- ThresholdSwag variable was going to be used for the NextInterval calculation to land on the low side of the transition point so that the continuous loop can start before the transition point. and stop at the same amount of time after
+- CurThreshold = StartTimeSlot variable is a temp variable to store the current threshold being evaluated. not currently in use but would be used for NextInterval.
+
+
 # Images
 
 # Start. Given Html base shows like this:
@@ -30,7 +55,7 @@
 -[X] refreshing page does NOT lose the data. IE it reloads what is saved in local storage.
 -[/] need function that checks for past, present, future states and reassigns the css class every second or checks for when an hour has been broken. the runs update.
 
-# Current Status------------------------------------------------------------------------
+# Current Status
 - auto load works. 
 - Clear content doesn't seem to work consistently still have 2 renders
 - need set interval function
@@ -51,7 +76,7 @@
 
 
 
-
+# Original Readme for project Task is below this line:
 # 05 Third-Party APIs: Work Day Scheduler
 
 ## Your Task
